@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using SkillTrackerService.Models;
+using SkillTrackerService.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +27,15 @@ namespace StockMarketService
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {     
+            services.Configure<EngineerProfileDatabaseSettings>(
+                Configuration.GetSection(nameof(EngineerProfileDatabaseSettings)));
+
+            services.AddSingleton<IEngineerProfileDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<EngineerProfileDatabaseSettings>>().Value);
+
+            services.AddSingleton<ProfileService>();
+
             services.AddControllers();
         }
 
