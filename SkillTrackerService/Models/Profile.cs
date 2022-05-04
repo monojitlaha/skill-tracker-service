@@ -9,9 +9,9 @@ namespace SkillTrackerService.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-       public string Name { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-        public decimal AssociateId { get; set; }
+        public string AssociateId { get; set; }
 
         public string Email { get; set; } = null!;
 

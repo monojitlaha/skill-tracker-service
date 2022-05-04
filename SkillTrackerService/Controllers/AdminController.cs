@@ -29,12 +29,12 @@ namespace SkillTrackerService.Controllers
         [HttpGet("{criteria}/{criteriaValue}")]
         public async Task<ActionResult<Profile>> Get(string criteria, string criteriaValue)
         {
-            string id = string.Empty;
-            if(criteria == "Id")
+            if (string.IsNullOrWhiteSpace(criteria) || string.IsNullOrWhiteSpace(criteriaValue))
             {
-                id = criteriaValue;
+                return BadRequest();
             }
-            var profile = await _profileService.GetAsync(id);
+            
+            var profile = await _profileService.GetAsync(criteria, criteriaValue);
 
             if (profile is null)
             {

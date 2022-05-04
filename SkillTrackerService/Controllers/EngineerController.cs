@@ -23,6 +23,11 @@ namespace StockMarketService.Controllers
         [ActionName("add-profile")]
         public async Task<ActionResult<Profile>> Post(Profile newProfile)
         {
+            if (newProfile is null)
+            {
+                return BadRequest();
+            }
+
             await _profileService.CreateAsync(newProfile);
 
             return newProfile;
@@ -32,7 +37,12 @@ namespace StockMarketService.Controllers
         [ActionName("update-profile")]
         public async Task<ActionResult> Update(string id, Profile newProfile)
         {
-            var book = await _profileService.GetAsync(id);
+            if(string.IsNullOrWhiteSpace(id) || newProfile is null)
+            {
+                return BadRequest();
+            }
+
+            var book = await _profileService.GetAsync("Id", id);
 
             if (book is null)
             {
