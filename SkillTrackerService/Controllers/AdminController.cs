@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SkillTrackerService.Models;
@@ -20,20 +21,20 @@ namespace SkillTrackerService.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Profile>> Get()
+        public async Task<ActionResult<List<Profile>>> Get()
         {
-            return _profileService.Get();
+            return await _profileService.GetAsync();
         }
 
         [HttpGet("{criteria}/{criteriaValue}")]
-        public ActionResult<Profile> Get(string criteria, string criteriaValue)
+        public async Task<ActionResult<Profile>> Get(string criteria, string criteriaValue)
         {
             string id = string.Empty;
             if(criteria == "Id")
             {
                 id = criteriaValue;
             }
-            var profile = _profileService.Get(id);
+            var profile = await _profileService.GetAsync(id);
 
             if (profile is null)
             {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SkillTrackerService.Models;
 using SkillTrackerService.Services;
@@ -20,18 +21,18 @@ namespace StockMarketService.Controllers
 
         [HttpPost]
         [ActionName("add-profile")]
-        public ActionResult<Profile> Post(Profile newProfile)
+        public async Task<ActionResult<Profile>> Post(Profile newProfile)
         {
-            _profileService.Create(newProfile);
+            await _profileService.CreateAsync(newProfile);
 
             return newProfile;
         }
 
         [HttpPut("{id:length(24)}")]
         [ActionName("update-profile")]
-        public IActionResult Update(string id, Profile newProfile)
+        public async Task<ActionResult> Update(string id, Profile newProfile)
         {
-            var book = _profileService.Get(id);
+            var book = await _profileService.GetAsync(id);
 
             if (book is null)
             {
@@ -40,7 +41,7 @@ namespace StockMarketService.Controllers
 
             newProfile.Id = book.Id;
 
-            _profileService.Update(id, newProfile);
+            await _profileService.UpdateAsync(id, newProfile);
 
             return NoContent();
         }

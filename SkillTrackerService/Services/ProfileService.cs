@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using SkillTrackerService.Models;
 
@@ -16,24 +16,19 @@ namespace SkillTrackerService.Services
             _profiles = database.GetCollection<Profile>(settings.ProfilesCollectionName);
         }
 
-        public List<Profile> Get()
-        {
-            List<Profile> profiles;
-            profiles = _profiles.Find(emp => true).ToList();
-            return profiles;
-        }
+        public async Task<List<Profile>> GetAsync() =>
+         await _profiles.Find(_ => true).ToListAsync();
 
-        public Profile Get(string id) =>
-            _profiles.Find<Profile>(profile => profile.Id == id).FirstOrDefault();
+        public async Task<Profile> GetAsync(string id) =>
+         await _profiles.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        public void Create(Profile profile) =>
-            _profiles.InsertOne(profile);
+        public async Task CreateAsync(Profile profile) =>
+         await _profiles.InsertOneAsync(profile);
 
-        public void Update(string id, Profile profile) =>
-            _profiles.ReplaceOne(x => x.Id == id, profile);
+        public async Task UpdateAsync(string id, Profile profile) =>
+         await _profiles.ReplaceOneAsync(x => x.Id == id, profile);
 
-        public void Remove(string id) =>
-            _profiles.DeleteOne(x => x.Id == id);
-
+        public async Task RemoveAsync(string id) =>
+         await _profiles.DeleteOneAsync(x => x.Id == id);
     }
 }
