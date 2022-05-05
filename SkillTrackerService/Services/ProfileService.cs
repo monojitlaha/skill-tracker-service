@@ -5,7 +5,7 @@ using SkillTrackerService.Models;
 
 namespace SkillTrackerService.Services
 {
-    public class ProfileService
+    public class ProfileService: IProfileService
     {
         private readonly IMongoCollection<Profile> _profiles;
         public ProfileService(IEngineerProfileDatabaseSettings settings)

@@ -27,7 +27,7 @@ namespace StockMarketService
             services.AddSingleton<IEngineerProfileDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<EngineerProfileDatabaseSettings>>().Value);
 
-            services.AddSingleton<ProfileService>();
+            services.AddSingleton<IProfileService, ProfileService>();
 
             services.AddControllers();
 

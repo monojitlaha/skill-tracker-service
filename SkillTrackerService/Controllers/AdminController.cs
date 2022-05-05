@@ -11,10 +11,10 @@ namespace SkillTrackerService.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly ProfileService _profileService;
+        private readonly IProfileService _profileService;
         private readonly ILogger<AdminController> _logger;
 
-        public AdminController(ILogger<AdminController> logger, ProfileService profileService)
+        public AdminController(ILogger<AdminController> logger, IProfileService profileService)
         {
             _logger = logger;
             _profileService = profileService;
@@ -23,6 +23,7 @@ namespace SkillTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Profile>>> Get()
         {
+            _logger.LogInformation("Receieved Search Result Successfully");
             return await _profileService.GetAsync();
         }
 
@@ -31,6 +32,7 @@ namespace SkillTrackerService.Controllers
         {
             if (string.IsNullOrWhiteSpace(criteria) || string.IsNullOrWhiteSpace(criteriaValue))
             {
+                _logger.LogInformation("Input Parameter is not valid");
                 return BadRequest();
             }
             
@@ -38,9 +40,10 @@ namespace SkillTrackerService.Controllers
 
             if (profile is null)
             {
+                _logger.LogInformation("Search Result is Empty");
                 return NotFound();
             }
-
+            _logger.LogInformation("Receieved Search Result Successfully");
             return profile;
         }
     }
