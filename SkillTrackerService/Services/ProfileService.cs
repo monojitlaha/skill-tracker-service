@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using SkillTrackerService.Models;
 
@@ -21,28 +22,29 @@ namespace SkillTrackerService.Services
 
         public async Task<Profile> GetAsync(string criteria, string criteriaValue)
         {
-            var profile = new Profile();
+            FilterDefinition<Profile> filter;
             if (criteria.Trim().ToLower() == "name")
             {
-                profile = await _profiles.Find(x => x.Name.ToLower() == criteriaValue.ToLower()).FirstOrDefaultAsync();
+                filter = Builders<Profile>.Filter.Eq("Name", criteriaValue);
             }
             else if (criteria.Trim().ToLower() == "associateid")
             {
-                profile = await _profiles.Find(x => x.AssociateId == criteriaValue).FirstOrDefaultAsync();
+                filter = Builders<Profile>.Filter.Eq("AssociateId", criteriaValue);
             }
             else if (criteria.Trim().ToLower() == "email")
             {
-                profile = await _profiles.Find(x => x.Email.ToLower() == criteriaValue.ToLower()).FirstOrDefaultAsync();
+                filter = Builders<Profile>.Filter.Eq("Email", criteriaValue);
             }
             else if (criteria.Trim().ToLower() == "mobile")
             {
-                profile = await _profiles.Find(x => x.Mobile == criteriaValue).FirstOrDefaultAsync();
+                filter = Builders<Profile>.Filter.Eq("Mobile", criteriaValue);
             }
             else
             {
-                profile = await _profiles.Find(x => x.Id == criteriaValue).FirstOrDefaultAsync();
+                var objectId = new ObjectId(criteriaValue);
+                filter = Builders<Profile>.Filter.Eq("_id", objectId);
             }
-            return await Task.FromResult(profile);
+            return await _profiles.FindAsync(filter).Result.FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(Profile profile) =>
