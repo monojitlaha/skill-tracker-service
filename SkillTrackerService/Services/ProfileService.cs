@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using SkillTrackerService.DbContext;
 using SkillTrackerService.Models;
 
 namespace SkillTrackerService.Services
@@ -9,12 +10,10 @@ namespace SkillTrackerService.Services
     public class ProfileService: IProfileService
     {
         private readonly IMongoCollection<Profile> _profiles;
-        public ProfileService(IEngineerProfileDatabaseSettings settings)
-        {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
 
-            _profiles = database.GetCollection<Profile>(settings.ProfilesCollectionName);
+        public ProfileService(IMongoProfileDBContext mongoProfileDBContext)
+        {
+            _profiles = mongoProfileDBContext.GetCollection<Profile>("Profiles");
         }
 
         public async Task<List<Profile>> GetAsync() =>

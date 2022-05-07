@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SkillTrackerService.DbContext;
 using SkillTrackerService.Models;
 using SkillTrackerService.Services;
 
@@ -26,7 +27,7 @@ namespace StockMarketService
 
             services.AddSingleton<IEngineerProfileDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<EngineerProfileDatabaseSettings>>().Value);
-
+            services.AddSingleton<IMongoProfileDBContext, MongoProfileDBContext>();
             services.AddSingleton<IProfileService, ProfileService>();
 
             services.AddControllers();
