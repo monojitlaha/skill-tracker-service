@@ -17,7 +17,7 @@ namespace SkillTrackerService.Services
         }
 
         public async Task<List<Profile>> GetAsync() =>
-         await _profiles.Find(_ => true).ToListAsync();
+         await _profiles.Find(Builders<Profile>.Filter.Empty, null).ToListAsync();
 
         public async Task<Profile> GetAsync(string criteria, string criteriaValue)
         {
