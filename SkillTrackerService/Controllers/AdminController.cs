@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using SkillTrackerService.Models;
 using SkillTrackerService.Services;
@@ -13,11 +15,14 @@ namespace SkillTrackerService.Controllers
     {
         private readonly IProfileService _profileService;
         private readonly ILogger<AdminController> _logger;
+        private readonly IMemoryCache _memoryCache;
 
-        public AdminController(ILogger<AdminController> logger, IProfileService profileService)
+        public AdminController(ILogger<AdminController> logger, IProfileService profileService,
+                               IMemoryCache memoryCache)
         {
             _logger = logger;
             _profileService = profileService;
+            _memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -35,8 +40,20 @@ namespace SkillTrackerService.Controllers
                 _logger.LogInformation("Input Parameter is not valid");
                 return BadRequest();
             }
-            
-            var profile = await _profileService.GetAsync(criteria, criteriaValue);
+
+            var cacheKey = $"{criteria.ToLower()}_{criteriaValue.ToLower()}";
+            if (!_memoryCache.TryGetValue(cacheKey, out Profile profile))
+            {
+                profile = await _profileService.GetAsync(criteria, criteriaValue);
+                var cacheExpirationOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTime.Now.AddHours(6),
+                    Priority = CacheItemPriority.Normal,
+                    SlidingExpiration = TimeSpan.FromMinutes(5)
+                };
+                if(profile != null)
+                 _memoryCache.Set(cacheKey, profile, cacheExpirationOptions);
+            }
 
             if (profile is null)
             {
@@ -44,6 +61,7 @@ namespace SkillTrackerService.Controllers
                 return NotFound();
             }
             _logger.LogInformation("Receieved Search Result Successfully");
+
             return profile;
         }
     }

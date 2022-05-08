@@ -32,6 +32,8 @@ namespace StockMarketService
 
             services.AddControllers();
 
+            services.AddMemoryCache();
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
