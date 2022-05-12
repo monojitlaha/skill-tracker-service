@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace SkillTrackerService.Models
@@ -9,12 +10,16 @@ namespace SkillTrackerService.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         public string AssociateId { get; set; }
 
-        public string Email { get; set; } = null!;
+        public string Email { get; set; }
 
-        public string Mobile { get; set; } = null!;
+        public string Mobile { get; set; }
+
+        public List<Skill> TechnicalSkills { get; set; }
+
+        public List<Skill> CommunicationSkills { get; set; }
     }
 }

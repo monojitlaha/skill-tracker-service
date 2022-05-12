@@ -279,7 +279,23 @@ namespace SkillTrackerService.Tests.Services
                 AssociateId = "12345",
                 Email = "Test@gmail.com",
                 Mobile = "9876543211",
-                Id = id
+                Id = id,
+                CommunicationSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "Communication",
+                        Rating = 18
+                    }
+                },
+                TechnicalSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "Angular",
+                        Rating = 15
+                    }
+                }
             };
             _profiles = new List<Profile>
             {
@@ -328,7 +344,23 @@ namespace SkillTrackerService.Tests.Services
                 AssociateId = "12345",
                 Email = "Test@gmail.com",
                 Mobile = "9876543211",
-                Id = id
+                Id = id,
+                CommunicationSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "Communication",
+                        Rating = 18
+                    }
+                },
+                TechnicalSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "Angular",
+                        Rating = 15
+                    }
+                }
             };
 
             var newProfile = new Profile
@@ -337,7 +369,23 @@ namespace SkillTrackerService.Tests.Services
                 AssociateId = "12345",
                 Email = "Test@gmail.com",
                 Mobile = "9876543211",
-                Id = id
+                Id = id,
+                CommunicationSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "Aptitude",
+                        Rating = 18
+                    }
+                },
+                TechnicalSkills = new List<Skill>
+                {
+                    new Skill
+                    {
+                        Description = "AWS",
+                        Rating = 15
+                    }
+                }
             };
 
             _profiles = new List<Profile>
