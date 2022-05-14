@@ -1,0 +1,62 @@
+{
+  "name": "Monojit Laha",
+  "associateId": "string",
+  "email": "string",
+  "mobile": "string",
+  "technicalSkills": [
+    {
+      "description": "HTML-CSS-JAVASCRIPT",
+      "rating": 18
+    },
+    {
+      "description": "ANGULAR",
+      "rating": 18
+    },
+    {
+      "description": "REACT",
+      "rating": 15
+    },
+    {
+      "description": "SPRING",
+      "rating": 15
+    },
+    {
+      "description": "RESTFUL",
+      "rating": 18
+    },
+    {
+      "description": "HIBERNATE",
+      "rating": 15
+    },
+    {
+      "description": "GIT",
+      "rating": 15
+    },
+    {
+      "description": "DOCKER",
+      "rating": 18
+    },
+    {
+      "description": "JENKINS",
+      "rating": 15
+    },
+    {
+      "description": "AWS",
+      "rating": 18
+    }
+  ],
+  "communicationSkills": [
+    {
+      "description": "SPOKEN",
+      "rating": 15
+    },
+    {
+      "description": "COMMUNICATION",
+      "rating": 18
+    },
+     {
+      "description": "APTITUDE",
+      "rating": 15
+    }
+  ]
+}
