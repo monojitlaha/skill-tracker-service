@@ -37,6 +37,7 @@ namespace SkillTrackerService.Controllers
         {
             if (string.IsNullOrWhiteSpace(criteria) || string.IsNullOrWhiteSpace(criteriaValue))
             {
+                _logger.LogInformation("AdminController Index executed at {date}", DateTime.UtcNow);
                 _logger.LogInformation("Input Parameter is not valid");
                 return BadRequest();
             }
