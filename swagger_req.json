@@ -1,8 +1,8 @@
 {
   "name": "Monojit Laha",
-  "associateId": "string",
-  "email": "string",
-  "mobile": "string",
+  "associateId": "123456",
+  "email": "test@gmail.com",
+  "mobile": "9876543212",
   "technicalSkills": [
     {
       "description": "HTML-CSS-JAVASCRIPT",
