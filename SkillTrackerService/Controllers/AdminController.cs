@@ -28,8 +28,20 @@ namespace SkillTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Profile>>> Get()
         {
-            _logger.LogInformation("Receieved Search Result Successfully");
-            return await _profileService.GetAsync();
+            try
+            {                
+                _logger.LogInformation("Receieved Search Result Successfully");
+                throw new Exception("Test");
+                var result = await _profileService.GetAsync();
+                if (result == null)
+                    return NotFound();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error in get-profile:{ex.Message}");
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("{criteria}/{criteriaValue}")]
@@ -42,28 +54,36 @@ namespace SkillTrackerService.Controllers
                 return BadRequest();
             }
 
-            var cacheKey = $"{criteria.ToLower()}_{criteriaValue.ToLower()}";
-            if (!_memoryCache.TryGetValue(cacheKey, out Profile profile))
+            try
             {
-                profile = await _profileService.GetAsync(criteria, criteriaValue);
-                var cacheExpirationOptions = new MemoryCacheEntryOptions
+                var cacheKey = $"{criteria.ToLower()}_{criteriaValue.ToLower()}";
+                if (!_memoryCache.TryGetValue(cacheKey, out Profile profile))
                 {
-                    AbsoluteExpiration = DateTime.Now.AddHours(6),
-                    Priority = CacheItemPriority.Normal,
-                    SlidingExpiration = TimeSpan.FromMinutes(5)
-                };
-                if(profile != null)
-                 _memoryCache.Set(cacheKey, profile, cacheExpirationOptions);
-            }
+                    profile = await _profileService.GetAsync(criteria, criteriaValue);
+                    var cacheExpirationOptions = new MemoryCacheEntryOptions
+                    {
+                        AbsoluteExpiration = DateTime.Now.AddHours(6),
+                        Priority = CacheItemPriority.Normal,
+                        SlidingExpiration = TimeSpan.FromMinutes(5)
+                    };
+                    if (profile != null)
+                        _memoryCache.Set(cacheKey, profile, cacheExpirationOptions);
+                }
 
-            if (profile is null)
+                if (profile is null)
+                {
+                    _logger.LogInformation("Search Result is Empty");
+                    return NotFound();
+                }
+                _logger.LogInformation("Receieved Search Result Successfully");
+
+                return Ok(profile);
+            }
+            catch (Exception ex)
             {
-                _logger.LogInformation("Search Result is Empty");
-                return NotFound();
+                _logger.LogError($"Error in get-profile-by-criteria:{ex.Message}");
+                return StatusCode(500);
             }
-            _logger.LogInformation("Receieved Search Result Successfully");
-
-            return profile;
         }
     }
 }

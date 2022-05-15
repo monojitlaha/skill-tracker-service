@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SkillTrackerService.Models;
@@ -29,9 +30,17 @@ namespace StockMarketService.Controllers
                 return BadRequest();
             }
 
-            await _profileService.CreateAsync(newProfile);
-            _logger.LogInformation("Created Profile Successfully");
-            return newProfile;
+            try
+            {
+                await _profileService.CreateAsync(newProfile);
+                _logger.LogInformation("Created Profile Successfully");
+                return newProfile;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error in add-profile:{ex.Message}");
+                return StatusCode(500);
+            }    
         }
 
         [HttpPut("{id:length(24)}")]
@@ -44,19 +53,27 @@ namespace StockMarketService.Controllers
                 return BadRequest();
             }
 
-            var book = await _profileService.GetAsync("Id", id);
-
-            if (book is null)
+            try
             {
-                _logger.LogInformation("Profile Information not found");
-                return NotFound();
+                var book = await _profileService.GetAsync("Id", id);
+
+                if (book is null)
+                {
+                    _logger.LogInformation("Profile Information not found");
+                    return NotFound();
+                }
+
+                newProfile.Id = book.Id;
+
+                await _profileService.UpdateAsync(id, newProfile);
+                _logger.LogInformation("Updated Profile Successfully");
+                return NoContent();
             }
-
-            newProfile.Id = book.Id;
-
-            await _profileService.UpdateAsync(id, newProfile);
-            _logger.LogInformation("Updated Profile Successfully");
-            return NoContent();
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error in update-profile:{ex.Message}");
+                return StatusCode(500);
+            }            
         }
     }
 }
