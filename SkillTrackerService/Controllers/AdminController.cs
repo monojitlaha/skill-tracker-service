@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -32,7 +33,7 @@ namespace SkillTrackerService.Controllers
             {                
                 _logger.LogInformation("Receieved Search Result Successfully");
                 var result = await _profileService.GetAsync();
-                if (result == null)
+                if (result == null || !result.Any())
                     return NotFound();
                 return Ok(result);
             }
@@ -44,7 +45,7 @@ namespace SkillTrackerService.Controllers
         }
 
         [HttpGet("{criteria}/{criteriaValue}")]
-        public async Task<ActionResult<Profile>> Get(string criteria, string criteriaValue)
+        public async Task<ActionResult<List<Profile>>> Get(string criteria, string criteriaValue)
         {
             if (string.IsNullOrWhiteSpace(criteria) || string.IsNullOrWhiteSpace(criteriaValue))
             {
@@ -56,27 +57,27 @@ namespace SkillTrackerService.Controllers
             try
             {
                 var cacheKey = $"{criteria.ToLower()}_{criteriaValue.ToLower()}";
-                if (!_memoryCache.TryGetValue(cacheKey, out Profile profile))
+                if (!_memoryCache.TryGetValue(cacheKey, out List<Profile> profiles))
                 {
-                    profile = await _profileService.GetAsync(criteria, criteriaValue);
+                    profiles = await _profileService.GetAsync(criteria, criteriaValue);
                     var cacheExpirationOptions = new MemoryCacheEntryOptions
                     {
                         AbsoluteExpiration = DateTime.Now.AddHours(6),
                         Priority = CacheItemPriority.Normal,
                         SlidingExpiration = TimeSpan.FromMinutes(5)
                     };
-                    if (profile != null)
-                        _memoryCache.Set(cacheKey, profile, cacheExpirationOptions);
+                    if (profiles != null && profiles.Any())
+                        _memoryCache.Set(cacheKey, profiles, cacheExpirationOptions);
                 }
 
-                if (profile is null)
+                if (profiles is null || !profiles.Any())
                 {
                     _logger.LogInformation("Search Result is Empty");
                     return NotFound();
                 }
                 _logger.LogInformation("Receieved Search Result Successfully");
 
-                return Ok(profile);
+                return Ok(profiles);
             }
             catch (Exception ex)
             {

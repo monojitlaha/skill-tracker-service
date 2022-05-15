@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -37,8 +36,8 @@ namespace SkillTrackerService.Tests.ControllerTests
             //Act
             var output = await _adminController.Get();
             //Assert
-            Assert.NotNull(output.Value);
-            Assert.Equal("Test", output.Value[0].Name);            
+            Assert.NotNull(((ObjectResult)output.Result).Value);
+            Assert.Equal("Test", ((List<Profile>)((ObjectResult)output.Result).Value)[0].Name);            
         }
 
         //[Fact]
@@ -59,9 +58,9 @@ namespace SkillTrackerService.Tests.ControllerTests
         public async void Get_Result_By_Criteria_Result_Is_Null()
         {
             //Arrange
-            Profile profile = null;
-            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profile);
-            var memoryCache = MockMemoryCacheService.GetMemoryCache(profile);
+            List<Profile> profiles = null;
+            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profiles);
+            var memoryCache = MockMemoryCacheService.GetMemoryCache(profiles);
             //Act
             var response = await _adminController.Get("Name", "Test1");
             // Assert

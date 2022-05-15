@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -19,12 +20,16 @@ namespace SkillTrackerService.Services
         public async Task<List<Profile>> GetAsync() =>
          await _profiles.Find(Builders<Profile>.Filter.Empty, null).ToListAsync();
 
-        public async Task<Profile> GetAsync(string criteria, string criteriaValue)
+        public async Task<List<Profile>> GetAsync(string criteria, string criteriaValue)
         {
             FilterDefinition<Profile> filter;
             if (criteria.Trim().ToLower() == "name")
             {
                 filter = Builders<Profile>.Filter.Eq("Name", criteriaValue);
+            }
+            else if (criteria.Trim().ToLower() == "username")
+            {
+                filter = Builders<Profile>.Filter.Eq("UserName", criteriaValue);
             }
             else if (criteria.Trim().ToLower() == "associateid")
             {
@@ -38,12 +43,22 @@ namespace SkillTrackerService.Services
             {
                 filter = Builders<Profile>.Filter.Eq("Mobile", criteriaValue);
             }
+            else if (criteria.Trim().ToLower() == "skill")
+            {
+                var techSkillsFilter = Builders<Profile>.Filter.ElemMatch(
+                        x => x.TechnicalSkills,
+                        y => y.Description.ToLower() == criteriaValue.ToLower());
+                var commSkillsFilter = Builders<Profile>.Filter.ElemMatch(
+                        x => x.CommunicationSkills,
+                        y => y.Description.ToLower() == criteriaValue.ToLower());
+                filter = Builders<Profile>.Filter.Or(techSkillsFilter, commSkillsFilter); 
+            }
             else
             {
                 var objectId = new ObjectId(criteriaValue);
                 filter = Builders<Profile>.Filter.Eq("_id", objectId);
             }
-            return await _profiles.FindAsync(filter).Result.FirstOrDefaultAsync();
+            return await _profiles.FindAsync(filter).Result.ToListAsync();
         }
 
         public async Task CreateAsync(Profile profile) =>
@@ -56,3 +71,4 @@ namespace SkillTrackerService.Services
          await _profiles.DeleteOneAsync(x => x.Id == id);
     }
 }
+

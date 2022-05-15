@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SkillTrackerService.Models;
@@ -51,7 +52,11 @@ namespace SkillTrackerService.Tests.ControllerTests
         {
             //Arrange
             Profile profile = new Profile { Id = "1", Name = "Test", AssociateId = "1234", Email = "Test@gmail.com", Mobile = "9876543212" };
-            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profile);
+            List<Profile> profiles = new List<Profile>
+            {
+                profile
+            };
+            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profiles);
             _mockProfileService.Setup(x => x.UpdateAsync(It.IsAny<string>(), It.IsAny<Profile>()));
             //Act
             var output = await _engineerController.Update("1", profile);
@@ -88,7 +93,11 @@ namespace SkillTrackerService.Tests.ControllerTests
             //Arrange
             Profile newProfile = new Profile { Id = "1", Name = "Test", AssociateId = "1234", Email = "Test@gmail.com", Mobile = "9876543212" };
             Profile profile = null;
-            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profile);
+            List<Profile> profiles = new List<Profile>
+            {
+                profile
+            };
+            _mockProfileService.Setup(x => x.GetAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(profiles);
             _mockProfileService.Setup(x => x.UpdateAsync(It.IsAny<string>(), It.IsAny<Profile>()));
             //Act
             var output = await _engineerController.Update("2", newProfile);

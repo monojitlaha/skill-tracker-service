@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -57,13 +58,13 @@ namespace StockMarketService.Controllers
             {
                 var book = await _profileService.GetAsync("Id", id);
 
-                if (book is null)
+                if (book is null || !book.Any())
                 {
                     _logger.LogInformation("Profile Information not found");
                     return NotFound();
                 }
 
-                newProfile.Id = book.Id;
+                newProfile.Id = book.FirstOrDefault().Id;
 
                 await _profileService.UpdateAsync(id, newProfile);
                 _logger.LogInformation("Updated Profile Successfully");
