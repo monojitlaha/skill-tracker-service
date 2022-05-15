@@ -67,7 +67,7 @@ namespace StockMarketService.Controllers
 
                 await _profileService.UpdateAsync(id, newProfile);
                 _logger.LogInformation("Updated Profile Successfully");
-                return NoContent();
+                return Ok("Updated Profile Successfully");
             }
             catch(Exception ex)
             {
