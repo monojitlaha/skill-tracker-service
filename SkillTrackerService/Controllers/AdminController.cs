@@ -31,7 +31,6 @@ namespace SkillTrackerService.Controllers
             try
             {                
                 _logger.LogInformation("Receieved Search Result Successfully");
-                throw new Exception("Test");
                 var result = await _profileService.GetAsync();
                 if (result == null)
                     return NotFound();
