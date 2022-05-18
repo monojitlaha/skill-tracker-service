@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -25,7 +26,9 @@ namespace SkillTrackerService.Services
             FilterDefinition<Profile> filter;
             if (criteria.Trim().ToLower() == "name")
             {
-                filter = Builders<Profile>.Filter.Eq("Name", criteriaValue);
+                var escapeInput = Regex.Escape(criteriaValue);
+                var regx = new Regex(escapeInput, RegexOptions.IgnoreCase);
+                filter = Builders<Profile>.Filter.Regex("Name", BsonRegularExpression.Create(regx));
             }
             else if (criteria.Trim().ToLower() == "username")
             {
