@@ -152,7 +152,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Monojit Laha\",\r\n    \"associateId\": \"411111\",\r\n    \"email\": \"monojit.laha@cognizant.com\",\r\n    \"mobile\": \"9830080000\",\r\n    \"technicalSkills\": [\r\n        {\r\n            \"description\": \"HTML-CSS-JAVASCRIPT\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"ANGULAR\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"REACT\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"SPRING\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"RESTFUL\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"HIBERNATE\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"GIT\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"DOCKER\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"JENKINS\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"AWS\",\r\n            \"rating\": 18\r\n        }\r\n    ],\r\n    \"communicationSkills\": [\r\n        {\r\n            \"description\": \"SPOKEN\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"COMMUNICATION\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"APTITUDE\",\r\n            \"rating\": 15\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"name\": \"Sumit Dutta\",\r\n    \"associateId\": \"4000000\",\r\n    \"email\": \"sumit.dutta@cognizant.com\",\r\n    \"mobile\": \"9830080001\",\r\n    \"technicalSkills\": [\r\n        {\r\n            \"description\": \"HTML-CSS-JAVASCRIPT\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"ANGULAR\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"REACT\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"SPRING\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"RESTFUL\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"HIBERNATE\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"GIT\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"DOCKER\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"JENKINS\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"AWS\",\r\n            \"rating\": 18\r\n        }\r\n    ],\r\n    \"communicationSkills\": [\r\n        {\r\n            \"description\": \"SPOKEN\",\r\n            \"rating\": 15\r\n        },\r\n        {\r\n            \"description\": \"COMMUNICATION\",\r\n            \"rating\": 18\r\n        },\r\n        {\r\n            \"description\": \"APTITUDE\",\r\n            \"rating\": 15\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -160,7 +160,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9020/engineer/profile/update/6280ed415c646c6b0b45c03a",
+							"raw": "http://localhost:9020/engineer/profile/update/{{id}}",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -170,7 +170,7 @@
 								"engineer",
 								"profile",
 								"update",
-								"6280ed415c646c6b0b45c03a"
+								"{{id}}"
 							]
 						}
 					},
