@@ -33,6 +33,7 @@ namespace StockMarketService.Controllers
 
             try
             {
+                _logger.LogInformation("Invoking add-profile method");
                 await _profileService.CreateAsync(newProfile);
                 _logger.LogInformation("Created Profile Successfully");
                 return newProfile;
@@ -56,6 +57,7 @@ namespace StockMarketService.Controllers
 
             try
             {
+                _logger.LogInformation("Invoking update-profile method");
                 var book = await _profileService.GetAsync("Id", id);
 
                 if (book is null || !book.Any())

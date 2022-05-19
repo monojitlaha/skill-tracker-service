@@ -30,11 +30,12 @@ namespace SkillTrackerService.Controllers
         public async Task<ActionResult<List<Profile>>> Get()
         {
             try
-            {                
-                _logger.LogInformation("Receieved Search Result Successfully");
+            {
+                _logger.LogInformation("Invoking GET method");
                 var result = await _profileService.GetAsync();
                 if (result == null || !result.Any())
                     return NotFound();
+                _logger.LogInformation("Receieved Search Result Successfully");
                 return Ok(result);
             }
             catch (Exception ex)
@@ -56,6 +57,7 @@ namespace SkillTrackerService.Controllers
 
             try
             {
+                _logger.LogInformation("Invoking GET method by passing Search Criteria");
                 var cacheKey = $"{criteria.ToLower()}_{criteriaValue.ToLower()}";
                 if (!_memoryCache.TryGetValue(cacheKey, out List<Profile> profiles))
                 {
