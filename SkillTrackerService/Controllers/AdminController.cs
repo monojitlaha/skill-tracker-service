@@ -72,11 +72,6 @@ namespace SkillTrackerService.Controllers
                         _memoryCache.Set(cacheKey, profiles, cacheExpirationOptions);
                 }
 
-                if (profiles is null || !profiles.Any())
-                {
-                    _logger.LogInformation("Search Result is Empty");
-                    return NotFound();
-                }
                 _logger.LogInformation("Receieved Search Result Successfully");
 
                 return Ok(profiles);

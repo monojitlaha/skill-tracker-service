@@ -64,7 +64,7 @@ namespace SkillTrackerService.Tests.ControllerTests
             //Act
             var response = await _adminController.Get("Name", "Test1");
             // Assert
-            Assert.Equal(404, ((StatusCodeResult)response.Result).StatusCode);
+            Assert.Null(response.Value);
         }
 
         [Fact]

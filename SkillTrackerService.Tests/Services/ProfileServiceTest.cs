@@ -285,7 +285,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "Communication",
-                        Rating = 18
+                        Rating = "18"
                     }
                 },
                 TechnicalSkills = new List<Skill>
@@ -293,7 +293,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "Angular",
-                        Rating = 15
+                        Rating = "15"
                     }
                 }
             };
@@ -350,7 +350,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "Communication",
-                        Rating = 18
+                        Rating = "18"
                     }
                 },
                 TechnicalSkills = new List<Skill>
@@ -358,7 +358,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "Angular",
-                        Rating = 15
+                        Rating = "15"
                     }
                 }
             };
@@ -375,7 +375,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "Aptitude",
-                        Rating = 18
+                        Rating = "18"
                     }
                 },
                 TechnicalSkills = new List<Skill>
@@ -383,7 +383,7 @@ namespace SkillTrackerService.Tests.Services
                     new Skill
                     {
                         Description = "AWS",
-                        Rating = 15
+                        Rating = "15"
                     }
                 }
             };
