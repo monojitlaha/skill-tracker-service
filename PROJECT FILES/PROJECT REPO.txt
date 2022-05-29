@@ -6,4 +6,4 @@ https://github.com/monojitlaha/skill-tracker-apigw.git - API GATEWAY
 
 https://github.com/monojitlaha/skill-tracker-service.git - .NET SERVICE
 
-https://github.com/monojitlaha/skill-tracker-lambda.git - AWS 
+https://github.com/monojitlaha/skill-tracker-lambda.git - AWS  
