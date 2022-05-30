@@ -1,0 +1,9 @@
+https://github.com/monojitlaha/skill-tracker-app.git  - ANGULAR
+
+https://github.com/monojitlaha/jwt-authentication-service.git - AUTHENTICATION
+
+https://github.com/monojitlaha/skill-tracker-apigw.git - API GATEWAY
+
+https://github.com/monojitlaha/skill-tracker-service.git - .NET SERVICE
+
+https://github.com/monojitlaha/skill-tracker-lambda.git - AWS 
